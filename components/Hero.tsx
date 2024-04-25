@@ -27,7 +27,7 @@ export default function Hero() {
                 class="mt-4 transition-colors text-blue-400 cursor-pointer inline-flex items-center group px-4 py-2 hover:text-blue-100"
             >
                 <IconLinkedIn
-                    class="inline-block w-5 h-5 transition group-hover:translate-x-0.5"
+                    class="inline-block w-10 h-10 transition group-hover:translate-x-0.5"
                     aria-hidden="true"
                 />
             </a>
@@ -36,7 +36,7 @@ export default function Hero() {
                     class="mt-4 transition-colors text-blue-400 cursor-pointer inline-flex items-center group px-4 py-2 hover:text-blue-100"
                 >
                     <IconGithub
-                        class="inline-block w-5 h-5 transition group-hover:translate-x-0.5"
+                        class="inline-block w-10 h-10 transition group-hover:translate-x-0.5"
                         aria-hidden="true"
                     />
                 </a>

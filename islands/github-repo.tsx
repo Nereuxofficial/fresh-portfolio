@@ -13,23 +13,18 @@ const GithubRepo = () => {
             .catch((error) => console.error(error))
     }, []);
 
-    console.debug(repos);
-
+    console.info(repos);
+    
     return (
         <div class="flex flex-wrap justify-center gap-4">
             {repos.map((repo) => (
-                <div key={repo.id} class="bg-gray-200 p-6 rounded-lg shadow-md w-100 h-40 flex flex-col justify-between">
+                <div key={repo.id} class="bg-gray-100 p-6 rounded-lg shadow-md w-100 h-40 flex flex-col justify-between border-solid border-gray-950 border-2">
                     <div class="flex flex-row items-center gap-2">
                     {repo.fork ? <IconGitFork/> : ""}
-                    <h3 class="font-semibold text-lg text-gray-800">{repo.name}</h3>
+                    <a href={repo.html_url} class="font-semibold text-lg text-neutral-950">{repo.name}</a>
+                    <IconChevronRight/>
                     </div>
-                    <p class="text-gray-600">{repo.description}</p>
-                    <div class="flex items-center justify-center">
-                        <a class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md flex items-center"
-                            href={repo.html_url}>
-                            View on GitHub <IconChevronRight class="ml-2" />
-                        </a>
-                    </div>
+                    <p class="text-gray">{repo.description}</p>
                 </div>
             ))}
         </div>
