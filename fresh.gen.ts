@@ -9,7 +9,7 @@ import * as $greet_name_ from "./routes/greet/[name].tsx";
 import * as $index from "./routes/index.tsx";
 import * as $Counter from "./islands/Counter.tsx";
 import * as $carousel from "./islands/carousel.tsx";
-import * as $random_repo from "./islands/random-repo.tsx";
+import * as $github_repo from "./islands/github-repo.tsx";
 import { type Manifest } from "$fresh/server.ts";
 
 const manifest = {
@@ -23,7 +23,7 @@ const manifest = {
   islands: {
     "./islands/Counter.tsx": $Counter,
     "./islands/carousel.tsx": $carousel,
-    "./islands/random-repo.tsx": $random_repo,
+    "./islands/github-repo.tsx": $github_repo,
   },
   baseUrl: import.meta.url,
 } satisfies Manifest;
