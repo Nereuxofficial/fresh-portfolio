@@ -13,7 +13,9 @@ const GithubRepo = () => {
             .catch((error) => console.error(error))
     }, []);
 
-    console.info(repos);
+    console.log(repos)
+    // setRepos(repos.filter((repo) => repo.pinned))
+    repos.sort((a, b) => b.stargazers_count - a.stargazers_count);
     
     return (
         <div class="flex flex-wrap justify-center gap-4">
