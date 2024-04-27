@@ -1,6 +1,7 @@
 import { useState, useEffect } from "preact/hooks";
 import IconChevronRight from "https://deno.land/x/tabler_icons_tsx@0.0.6/tsx/chevron-right.tsx";
 import IconGitFork from "https://deno.land/x/tabler_icons_tsx@0.0.6/tsx/git-fork.tsx";
+import IconStar from "https://deno.land/x/tabler_icons_tsx@0.0.6/tsx/star.tsx";
 
 const GithubRepo = () => {
     const [repos, setRepos] = useState([]);
@@ -27,6 +28,9 @@ const GithubRepo = () => {
                         <IconChevronRight />
                     </div>
                     <p class="text-gray">{repo.description}</p>
+                    <div class="flex flex-row items-center gap-2">
+                        <IconStar /><p>{repo.stargazers_count}</p>
+                    </div>
                 </div>
             ))}
         </div>
