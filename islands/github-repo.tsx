@@ -16,15 +16,15 @@ const GithubRepo = () => {
     console.log(repos)
     // setRepos(repos.filter((repo) => repo.pinned))
     repos.sort((a, b) => b.stargazers_count - a.stargazers_count);
-    
+
     return (
-        <div class="flex flex-wrap justify-center gap-4">
+        <div class="relative w-screen flex gap-4 snap-x overflow-x-auto">
             {repos.map((repo) => (
-                <div key={repo.id} class="bg-gray-100 p-6 rounded-lg shadow-md w-100 h-40 flex flex-col justify-between border-solid border-gray-950 border-2">
-                    <div class="flex flex-row items-center gap-2">
-                    {repo.fork ? <IconGitFork/> : ""}
-                    <a href={repo.html_url} class="font-semibold text-lg text-neutral-950">{repo.name}</a>
-                    <IconChevronRight/>
+                <div key={repo.id} class="bg-gray-100 shadow-xl p-6 snap-center snap-always rounded-lg flex-col flex-shrink-0 flex w-1/3 border-solid border-gray-950 border-2">
+                    <div class="flex flex-row items-center gap-2 w-full">
+                        {repo.fork ? <IconGitFork /> : ""}
+                        <a href={repo.html_url} class="font-semibold text-lg text-neutral-950">{repo.name}</a>
+                        <IconChevronRight />
                     </div>
                     <p class="text-gray">{repo.description}</p>
                 </div>
