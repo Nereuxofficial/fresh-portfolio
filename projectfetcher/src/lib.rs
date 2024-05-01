@@ -1,5 +1,6 @@
 use wasm_bindgen::JsValue;
 use worker::*;
+use worker_sys::Fetcher;
 
 #[event(fetch)]
 async fn main(req: Request, env: Env, ctx: Context) -> Result<Response> {

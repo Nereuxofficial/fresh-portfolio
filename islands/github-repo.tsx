@@ -4,7 +4,7 @@ import IconGitFork from "https://deno.land/x/tabler_icons_tsx@0.0.6/tsx/git-fork
 import IconStar from "https://deno.land/x/tabler_icons_tsx@0.0.6/tsx/star.tsx";
 
 const GithubRepo = () => {
-    const [repos, setRepos] = useState([]);
+    const [repos, setRepos] = useState<any[]>([]);
 
     useEffect(() => {
         // Fetch the repository data from GitHub API
