@@ -1,10 +1,18 @@
+use std::panic;
+
 use wasm_bindgen::JsValue;
 use worker::*;
-use worker_sys::Fetcher;
+use serde::{Deserialize, Serialize};
+
+#[derive(Serialize, Deserialize)]
+struct Query {
+    query: String,
+}
 
 #[event(fetch)]
 async fn main(req: Request, env: Env, ctx: Context) -> Result<Response> {
-    let body: JsValue = r#"{
+    panic::set_hook(Box::new(console_error_panic_hook::hook));
+    let query = r#"{
   repositoryOwner(login: "Nereuxofficial") {
     ... on User {
       pinnedItems(first: 6, types: REPOSITORY) {
@@ -20,14 +28,23 @@ async fn main(req: Request, env: Env, ctx: Context) -> Result<Response> {
       }
     }
   }
-}"#
-    .into();
-    let request: Request = worker::Request::new_with_init(
+}"#.to_string();
+    let mut request: Request = worker::Request::new_with_init(
         "https://api.github.com/graphql",
         RequestInit::new()
-            .with_body(Some(body))
-            .with_headers(Headers::from_iter([("Authorization", "TODO")])),
+            .with_method(Method::Post)
+            .with_body(Some(serde_json::to_string(&Query { query }).unwrap().into()))
+            .with_headers(Headers::from_iter([
+                (
+                    "Authorization".to_string(),
+                    format!("bearer {}", env.secret("GH_TOKEN").unwrap().to_string()),
+                ),
+                ("User-Agent".to_string(), "gears.workers.dev".to_string()),
+            ])),
     )
     .unwrap();
-    Response::ok("Hello, World!")
+    console_log!("Request: {:?}", request);
+    // Send the request
+    let response = worker::Fetch::Request(request).send().await?.text().await?;
+    Response::ok(response)
 }
