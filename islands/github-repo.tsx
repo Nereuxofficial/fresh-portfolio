@@ -8,6 +8,7 @@ const GithubRepo = () => {
 
     useEffect(() => {
         // Fetch the repository data from GitHub API
+        // TODO: Switch to repofetcher
         fetch("https://api.github.com/users/Nereuxofficial/repos")
             .then((response) => response.json())
             .then((data) => setRepos(data))
