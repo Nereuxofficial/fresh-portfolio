@@ -10,25 +10,32 @@ struct Query {
 }
 
 #[event(fetch)]
-async fn main(req: Request, env: Env, ctx: Context) -> Result<Response> {
+async fn main(mut req: Request, env: Env, ctx: Context) -> Result<Response> {
     panic::set_hook(Box::new(console_error_panic_hook::hook));
-    let query = r#"{
-  repositoryOwner(login: "Nereuxofficial") {
-    ... on User {
-      pinnedItems(first: 6, types: REPOSITORY) {
-        nodes {
-          ... on Repository {
+    let username = req.text().await.unwrap_or("Nereuxofficial".into()); 
+    // Sanitize the username
+    if username.is_empty() || username.len() > 39 || username.chars().any(|c| !c.is_alphanumeric()) {
+      console_log!("Invalid username {:?}", username);
+      return Response::error("Invalid username", 400);
+    }
+    let query = format!("{{
+  repositoryOwner(login: \"{}\") {{
+    ... on User {{
+
+      pinnedItems(first: 6, types: REPOSITORY) {{
+        nodes {{
+          ... on Repository {{
             name
             description
             openGraphImageUrl
             url
             stargazerCount
-          }
-        }
-      }
-    }
-  }
-}"#.to_string();
+          }}
+        }}
+      }}
+    }}
+  }}
+}}", username);
     let mut request: Request = worker::Request::new_with_init(
         "https://api.github.com/graphql",
         RequestInit::new()
